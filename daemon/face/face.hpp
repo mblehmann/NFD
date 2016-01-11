@@ -32,7 +32,14 @@
 
 #include <ndn-cxx/management/nfd-face-status.hpp>
 
+#include <ndn-cxx/announcement.hpp>
+#include <ndn-cxx/hint.hpp>
+#include <ndn-cxx/vicinity.hpp>
+#include <ndn-cxx/vicinity-data.hpp>
+
 namespace nfd {
+
+using ::ndn::Announcement;
 
 /** \class FaceId
  *  \brief identifies a face
@@ -78,6 +85,9 @@ public:
 
   /// fires when an Interest is received
   signal::Signal<Face, Interest> onReceiveInterest;
+
+  /// fires when an Interest is received
+  signal::Signal<Face, Announcement> onReceiveAnnouncement;
 
   /// fires when a Data is received
   signal::Signal<Face, Data> onReceiveData;
@@ -192,6 +202,7 @@ protected:
   getMutableCounters();
 
   DECLARE_SIGNAL_EMIT(onReceiveInterest)
+  DECLARE_SIGNAL_EMIT(onReceiveAnnouncement)
   DECLARE_SIGNAL_EMIT(onReceiveData)
   DECLARE_SIGNAL_EMIT(onSendInterest)
   DECLARE_SIGNAL_EMIT(onSendData)
