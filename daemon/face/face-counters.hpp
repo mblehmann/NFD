@@ -160,6 +160,58 @@ public:
     return m_nOutDatas;
   }
 
+  /// incoming Interest
+  const PacketCounter&
+  getNInAnnouncements() const
+  {
+    return m_nInAnnouncements;
+  }
+
+  PacketCounter&
+  getNInAnnouncements()
+  {
+    return m_nInAnnouncements;
+  }
+
+  /// incoming Data
+  const PacketCounter&
+  getNInHints() const
+  {
+    return m_nInHints;
+  }
+
+  PacketCounter&
+  getNInHints()
+  {
+    return m_nInHints;
+  }
+
+  /// outgoing Interest
+  const PacketCounter&
+  getNInVicinities() const
+  {
+    return m_nInVicinities;
+  }
+
+  PacketCounter&
+  getNInVicinities()
+  {
+    return m_nInVicinities;
+  }
+
+  /// outgoing Data
+  const PacketCounter&
+  getNInVicinityDatas() const
+  {
+    return m_nInVicinityDatas;
+  }
+
+  PacketCounter&
+  getNInVicinityDatas()
+  {
+    return m_nInVicinityDatas;
+  }
+
 protected:
   /** \brief copy current obseverations to a struct
    *  \param recipient an object with set methods for counters
@@ -172,13 +224,23 @@ protected:
     recipient.setNInDatas(this->getNInDatas());
     recipient.setNOutInterests(this->getNOutInterests());
     recipient.setNOutDatas(this->getNOutDatas());
+
+    recipient.setNInAnnouncements(this->getNInAnnouncements());
+    recipient.setNInHints(this->getNInHints());
+    recipient.setNInVicinities(this->getNInVicinities());
+    recipient.setNInVicinityDatas(this->getNInVicinityDatas());
   }
 
-private:
+protected:
   PacketCounter m_nInInterests;
   PacketCounter m_nInDatas;
   PacketCounter m_nOutInterests;
   PacketCounter m_nOutDatas;
+
+  PacketCounter m_nInAnnouncements;
+  PacketCounter m_nInHints;
+  PacketCounter m_nInVicinities;
+  PacketCounter m_nInVicinityDatas;
 };
 
 /** \brief contains link layer byte counters

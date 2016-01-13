@@ -40,6 +40,7 @@ using ndn::nfd::LOCAL_CONTROL_FEATURE_NEXT_HOP_FACE_ID;
 class LocalFace : public Face
 {
 public:
+
   LocalFace(const FaceUri& remoteUri, const FaceUri& localUri);
 
   /** \brief get whether any LocalControlHeader feature is enabled
@@ -60,6 +61,7 @@ public:
   /** \brief enable or disable a LocalControlHeader feature
    *
    *  \param feature The feature. Cannot be LOCAL_CONTROL_FEATURE_ANY
+
    *                                     or LOCAL_CONTROL_FEATURE_MAX
    */
   void
@@ -96,7 +98,7 @@ protected:
   Block
   filterAndEncodeLocalControlHeader(const Packet& packet);
 
-private:
+protected:
   std::vector<bool> m_localControlHeaderFeatures;
 };
 

@@ -32,14 +32,7 @@
 
 #include <ndn-cxx/management/nfd-face-status.hpp>
 
-#include <ndn-cxx/announcement.hpp>
-#include <ndn-cxx/hint.hpp>
-#include <ndn-cxx/vicinity.hpp>
-#include <ndn-cxx/vicinity-data.hpp>
-
 namespace nfd {
-
-using ::ndn::Announcement;
 
 /** \class FaceId
  *  \brief identifies a face
@@ -77,6 +70,8 @@ public:
     }
   };
 
+  Face();
+
   Face(const FaceUri& remoteUri, const FaceUri& localUri,
        bool isLocal = false, bool isMultiAccess = false);
 
@@ -86,9 +81,6 @@ public:
   /// fires when an Interest is received
   signal::Signal<Face, Interest> onReceiveInterest;
 
-  /// fires when an Interest is received
-  signal::Signal<Face, Announcement> onReceiveAnnouncement;
-
   /// fires when a Data is received
   signal::Signal<Face, Data> onReceiveData;
 
@@ -97,6 +89,18 @@ public:
 
   /// fires when a Data is sent out
   signal::Signal<Face, Data> onSendData;
+
+  /// fires when an Interest is received
+  signal::Signal<Face, Announcement> onReceiveAnnouncement;
+
+  /// fires when an Interest is received
+  signal::Signal<Face, Hint> onReceiveHint;
+
+  /// fires when an Interest is received
+  signal::Signal<Face, Vicinity> onReceiveVicinity;
+
+  /// fires when an Interest is received
+  signal::Signal<Face, VicinityData> onReceiveVicinityData;
 
   /// fires when face disconnects or fails to perform properly
   signal::Signal<Face, std::string/*reason*/> onFail;
@@ -202,17 +206,21 @@ protected:
   getMutableCounters();
 
   DECLARE_SIGNAL_EMIT(onReceiveInterest)
-  DECLARE_SIGNAL_EMIT(onReceiveAnnouncement)
   DECLARE_SIGNAL_EMIT(onReceiveData)
   DECLARE_SIGNAL_EMIT(onSendInterest)
   DECLARE_SIGNAL_EMIT(onSendData)
 
-private:
+  DECLARE_SIGNAL_EMIT(onReceiveAnnouncement)
+  DECLARE_SIGNAL_EMIT(onReceiveHint)
+  DECLARE_SIGNAL_EMIT(onReceiveVicinity)
+  DECLARE_SIGNAL_EMIT(onReceiveVicinityData)
+
+protected:
   // this method should be used only by the FaceTable
   void
   setId(FaceId faceId);
 
-private:
+protected:
   FaceId m_id;
   std::string m_description;
   FaceCounters m_counters;
