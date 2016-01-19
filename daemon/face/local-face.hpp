@@ -181,6 +181,34 @@ LocalFace::decodeAndDispatchInput(const Block& element)
 
         this->emitSignal(onReceiveData, *d);
       }
+    else if (payload.type() == tlv::Announcement)
+      {
+        shared_ptr<Announcement> a = make_shared<Announcement>();
+        a->wireDecode(payload);
+        
+        this->emitSignal(onReceiveAnnouncement, *a);
+      }
+    else if (payload.type() == tlv::Hint)
+      {
+        shared_ptr<Hint> h = make_shared<Hint>();
+        h->wireDecode(payload);
+        
+        this->emitSignal(onReceiveHint, *h);
+      }
+    else if (payload.type() == tlv::Vicinity)
+      {
+        shared_ptr<Vicinity> v = make_shared<Vicinity>();
+        v->wireDecode(payload);
+        
+        this->emitSignal(onReceiveVicinity, *v);
+      }
+    else if (payload.type() == tlv::VicinityData)
+      {
+        shared_ptr<VicinityData> vd = make_shared<VicinityData>();
+        vd->wireDecode(payload);
+        
+        this->emitSignal(onReceiveVicinityData, *vd);
+      }
     else
       return false;
 

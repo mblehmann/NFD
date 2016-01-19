@@ -126,6 +126,30 @@ InternalFace::sendData(const Data& data)
 }
 
 void
+InternalFace::sendAnnouncement(const Announcement& announcement)
+{
+  this->emitSignal(onSendAnnouncement, announcement);
+}
+
+void
+InternalFace::sendHint(const Hint& hint)
+{
+  this->emitSignal(onSendHint, hint);
+}
+
+void
+InternalFace::sendVicinity(const Vicinity& vicinity)
+{
+  this->emitSignal(onSendVicinity, vicinity);
+}
+
+void
+InternalFace::sendVicinityData(const VicinityData& vicinityData)
+{
+  this->emitSignal(onSendVicinityData, vicinityData);
+}
+
+void
 InternalFace::close()
 {
   BOOST_THROW_EXCEPTION(Error("Internal face cannot be closed"));

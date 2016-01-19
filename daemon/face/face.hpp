@@ -102,6 +102,18 @@ public:
   /// fires when an Interest is received
   signal::Signal<Face, VicinityData> onReceiveVicinityData;
 
+  /// fires when an Interest is sent out
+  signal::Signal<Face, Announcement> onSendAnnouncement;
+
+  /// fires when a Data is sent out
+  signal::Signal<Face, Hint> onSendHint;
+
+  /// fires when an Interest is sent out
+  signal::Signal<Face, Vicinity> onSendVicinity;
+
+  /// fires when a Data is sent out
+  signal::Signal<Face, VicinityData> onSendVicinityData;
+
   /// fires when face disconnects or fails to perform properly
   signal::Signal<Face, std::string/*reason*/> onFail;
 
@@ -112,6 +124,18 @@ public:
   /// send a Data
   virtual void
   sendData(const Data& data) = 0;
+
+  virtual void
+  sendAnnouncement(const Announcement& announcement) = 0;
+
+  virtual void
+  sendHint(const Hint& hint) = 0;
+
+  virtual void
+  sendVicinity(const Vicinity& vicinity) = 0;
+
+  virtual void
+  sendVicinityData(const VicinityData& vicinityData) = 0;
 
   /** \brief Close the face
    *
@@ -214,6 +238,11 @@ protected:
   DECLARE_SIGNAL_EMIT(onReceiveHint)
   DECLARE_SIGNAL_EMIT(onReceiveVicinity)
   DECLARE_SIGNAL_EMIT(onReceiveVicinityData)
+
+  DECLARE_SIGNAL_EMIT(onSendAnnouncement)
+  DECLARE_SIGNAL_EMIT(onSendHint)
+  DECLARE_SIGNAL_EMIT(onSendVicinity)
+  DECLARE_SIGNAL_EMIT(onSendVicinityData)
 
 protected:
   // this method should be used only by the FaceTable

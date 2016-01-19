@@ -87,6 +87,10 @@ FaceTable::addImpl(shared_ptr<Face> face, FaceId faceId)
 
   face->onReceiveInterest.connect(bind(&Forwarder::onInterest, &m_forwarder, ref(*face), _1));
   face->onReceiveData.connect(bind(&Forwarder::onData, &m_forwarder, ref(*face), _1));
+  face->onReceiveAnnouncement.connect(bind(&Forwarder::onAnnouncement, &m_forwarder, ref(*face), _1));
+  face->onReceiveHint.connect(bind(&Forwarder::onHint, &m_forwarder, ref(*face), _1));
+  face->onReceiveVicinity.connect(bind(&Forwarder::onVicinity, &m_forwarder, ref(*face), _1));
+  face->onReceiveVicinityData.connect(bind(&Forwarder::onVicinityData, &m_forwarder, ref(*face), _1));
   face->onFail.connectSingleShot(bind(&FaceTable::remove, this, face, _1));
 
   this->onAdd(face);

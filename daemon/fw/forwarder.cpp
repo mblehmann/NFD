@@ -413,6 +413,266 @@ Forwarder::onOutgoingData(const Data& data, Face& outFace)
   ++m_counters.getNOutDatas();
 }
 
+void
+Forwarder::onIncomingAnnouncement(Face& inFace, const Announcement& announcement)
+{
+  NFD_LOG_DEBUG("onIncomingAnnouncement face=" << inFace.getId() <<
+                " announcement=" << announcement.getName());
+
+  const_cast<Announcement&>(announcement).setIncomingFaceId(inFace.getId());
+  ++m_counters.getNInAnnouncements();
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !inFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(announcement.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onIncomingAnnouncement face=" << inFace.getId() <<
+                  " announcement=" << announcement.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+/*
+  // detect duplicate Nonce
+  int dnw = pitEntry->findNonce(interest.getNonce(), inFace);
+  bool hasDuplicateNonce = (dnw != pit::DUPLICATE_NONCE_NONE) ||
+                           m_deadNonceList.has(interest.getName(), interest.getNonce());
+  if (hasDuplicateNonce) {
+    // goto Interest loop pipeline
+    this->onInterestLoop(inFace, interest, pitEntry);
+    return;
+  }
+*/
+
+  for (const auto& i : this->getFaceTable()) {
+    shared_ptr<Face> outFace = std::dynamic_pointer_cast<Face>(i);
+    if (outFace.get() == &inFace) {
+      continue;
+    }
+    this->onOutgoingAnnouncement(announcement, *outFace);
+  }
+
+}
+
+void
+Forwarder::onOutgoingAnnouncement(const Announcement& announcement, Face& outFace)
+{
+  if (outFace.getId() == INVALID_FACEID) {
+    NFD_LOG_WARN("onOutgoingAnnouncement face=invalid announcement=" << announcement.getName());
+    return;
+  }
+  NFD_LOG_DEBUG("onOutgoingAnnouncement face=" << outFace.getId() << " announcement=" << announcement.getName());
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !outFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(announcement.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onOutgoingAnnouncement face=" << outFace.getId() <<
+                  " announcement=" << announcement.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+  // send Announcement
+  outFace.sendAnnouncement(announcement);
+  ++m_counters.getNOutAnnouncements();
+}
+
+void
+Forwarder::onIncomingHint(Face& inFace, const Hint& hint)
+{
+  NFD_LOG_DEBUG("onIncomingHint face=" << inFace.getId() <<
+                " hint=" << hint.getName());
+
+  const_cast<Hint&>(hint).setIncomingFaceId(inFace.getId());
+  ++m_counters.getNInHints();
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !inFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(hint.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onIncomingHint face=" << inFace.getId() <<
+                  " hint=" << hint.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+/*
+  // detect duplicate Nonce
+  int dnw = pitEntry->findNonce(interest.getNonce(), inFace);
+  bool hasDuplicateNonce = (dnw != pit::DUPLICATE_NONCE_NONE) ||
+                           m_deadNonceList.has(interest.getName(), interest.getNonce());
+  if (hasDuplicateNonce) {
+    // goto Interest loop pipeline
+    this->onInterestLoop(inFace, interest, pitEntry);
+    return;
+  }
+*/
+
+  for (const auto& i : this->getFaceTable()) {
+    shared_ptr<Face> outFace = std::dynamic_pointer_cast<Face>(i);
+    if (outFace.get() == &inFace) {
+      continue;
+    }
+    this->onOutgoingHint(hint, *outFace);
+  }
+
+}
+
+void
+Forwarder::onOutgoingHint(const Hint& hint, Face& outFace)
+{
+  if (outFace.getId() == INVALID_FACEID) {
+    NFD_LOG_WARN("onOutgoingHint face=invalid hint=" << hint.getName());
+    return;
+  }
+  NFD_LOG_DEBUG("onOutgoingHint face=" << outFace.getId() << " hint=" << hint.getName());
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !outFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(hint.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onOutgoingHint face=" << outFace.getId() <<
+                  " hint=" << hint.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+  // send Hint
+  outFace.sendHint(hint);
+  ++m_counters.getNOutHints();
+}
+
+void
+Forwarder::onIncomingVicinity(Face& inFace, const Vicinity& vicinity)
+{
+  NFD_LOG_DEBUG("onIncomingVicinity face=" << inFace.getId() <<
+                " vicinity=" << vicinity.getName());
+
+  const_cast<Vicinity&>(vicinity).setIncomingFaceId(inFace.getId());
+  ++m_counters.getNInVicinities();
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !inFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(vicinity.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onIncomingVicinity face=" << inFace.getId() <<
+                  " vicinity=" << vicinity.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+/*
+  // detect duplicate Nonce
+  int dnw = pitEntry->findNonce(interest.getNonce(), inFace);
+  bool hasDuplicateNonce = (dnw != pit::DUPLICATE_NONCE_NONE) ||
+                           m_deadNonceList.has(interest.getName(), interest.getNonce());
+  if (hasDuplicateNonce) {
+    // goto Interest loop pipeline
+    this->onInterestLoop(inFace, interest, pitEntry);
+    return;
+  }
+*/
+
+  for (const auto& i : this->getFaceTable()) {
+    shared_ptr<Face> outFace = std::dynamic_pointer_cast<Face>(i);
+    if (outFace.get() == &inFace) {
+      continue;
+    }
+    this->onOutgoingVicinity(vicinity, *outFace);
+  }
+
+}
+
+void
+Forwarder::onOutgoingVicinity(const Vicinity& vicinity, Face& outFace)
+{
+  if (outFace.getId() == INVALID_FACEID) {
+    NFD_LOG_WARN("onOutgoingVicinity face=invalid vicinity=" << vicinity.getName());
+    return;
+  }
+  NFD_LOG_DEBUG("onOutgoingVicinity face=" << outFace.getId() << " vicinity=" << vicinity.getName());
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !outFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(vicinity.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onOutgoingVicinity face=" << outFace.getId() <<
+                  " vicinity=" << vicinity.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+  // send Announcement
+  outFace.sendVicinity(vicinity);
+  ++m_counters.getNOutVicinities();
+}
+
+void
+Forwarder::onIncomingVicinityData(Face& inFace, const VicinityData& vicinityData)
+{
+  NFD_LOG_DEBUG("onIncomingVicinityData face=" << inFace.getId() <<
+                " vicinityData=" << vicinityData.getName());
+
+  const_cast<VicinityData&>(vicinityData).setIncomingFaceId(inFace.getId());
+  ++m_counters.getNInVicinityDatas();
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !inFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(vicinityData.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onIncomingVicinityData face=" << inFace.getId() <<
+                  " vicinityData=" << vicinityData.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+/*
+  // detect duplicate Nonce
+  int dnw = pitEntry->findNonce(interest.getNonce(), inFace);
+  bool hasDuplicateNonce = (dnw != pit::DUPLICATE_NONCE_NONE) ||
+                           m_deadNonceList.has(interest.getName(), interest.getNonce());
+  if (hasDuplicateNonce) {
+    // goto Interest loop pipeline
+    this->onInterestLoop(inFace, interest, pitEntry);
+    return;
+  }
+*/
+
+  for (const auto& i : this->getFaceTable()) {
+    shared_ptr<Face> outFace = std::dynamic_pointer_cast<Face>(i);
+    if (outFace.get() == &inFace) {
+      continue;
+    }
+    this->onOutgoingVicinityData(vicinityData, *outFace);
+  }
+
+}
+
+void
+Forwarder::onOutgoingVicinityData(const VicinityData& vicinityData, Face& outFace)
+{
+  if (outFace.getId() == INVALID_FACEID) {
+    NFD_LOG_WARN("onOutgoingVicinityData face=invalid vicinityData=" << vicinityData.getName());
+    return;
+  }
+  NFD_LOG_DEBUG("onOutgoingVicinityData face=" << outFace.getId() << " vicinityData=" << vicinityData.getName());
+
+  // /localhost scope control
+  bool isViolatingLocalhost = !outFace.isLocal() &&
+                              LOCALHOST_NAME.isPrefixOf(vicinityData.getName());
+  if (isViolatingLocalhost) {
+    NFD_LOG_DEBUG("onOutgoingVicinityData face=" << outFace.getId() <<
+                  " vicinityData=" << vicinityData.getName() << " violates /localhost");
+    // (drop)
+    return;
+  }
+
+  // send Announcement
+  outFace.sendVicinityData(vicinityData);
+  ++m_counters.getNOutVicinityDatas();
+}
+
 static inline bool
 compare_InRecord_expiry(const pit::InRecord& a, const pit::InRecord& b)
 {

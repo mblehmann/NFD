@@ -46,6 +46,18 @@ public:
   sendData(const Data& data) DECL_OVERRIDE;
 
   void
+  sendAnnouncement(const Announcement& announcement) DECL_OVERRIDE;
+
+  void
+  sendHint(const Hint& hint) DECL_OVERRIDE;
+
+  void
+  sendVicinity(const Vicinity& vicinity) DECL_OVERRIDE;
+
+  void
+  sendVicinityData(const VicinityData& vicinityData) DECL_OVERRIDE;
+
+  void
   close() DECL_OVERRIDE;
 };
 

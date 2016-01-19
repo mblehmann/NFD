@@ -160,7 +160,7 @@ public:
     return m_nOutDatas;
   }
 
-  /// incoming Interest
+  /// incoming Announcement
   const PacketCounter&
   getNInAnnouncements() const
   {
@@ -173,7 +173,7 @@ public:
     return m_nInAnnouncements;
   }
 
-  /// incoming Data
+  /// incoming Hint
   const PacketCounter&
   getNInHints() const
   {
@@ -186,7 +186,7 @@ public:
     return m_nInHints;
   }
 
-  /// outgoing Interest
+  /// incoming Vicinity
   const PacketCounter&
   getNInVicinities() const
   {
@@ -199,7 +199,7 @@ public:
     return m_nInVicinities;
   }
 
-  /// outgoing Data
+  /// incoming VicinityData
   const PacketCounter&
   getNInVicinityDatas() const
   {
@@ -210,6 +210,58 @@ public:
   getNInVicinityDatas()
   {
     return m_nInVicinityDatas;
+  }
+
+  /// outgoing Announcement
+  const PacketCounter&
+  getNOutAnnouncements() const
+  {
+    return m_nOutAnnouncements;
+  }
+
+  PacketCounter&
+  getNOutAnnouncements()
+  {
+    return m_nOutAnnouncements;
+  }
+
+  /// outgoing Hint
+  const PacketCounter&
+  getNOutHints() const
+  {
+    return m_nOutHints;
+  }
+
+  PacketCounter&
+  getNOutHints()
+  {
+    return m_nOutHints;
+  }
+
+  /// outgoing Vicinity
+  const PacketCounter&
+  getNOutVicinities() const
+  {
+    return m_nOutVicinities;
+  }
+
+  PacketCounter&
+  getNOutVicinities()
+  {
+    return m_nOutVicinities;
+  }
+
+  /// outgoing VicinityData
+  const PacketCounter&
+  getNOutVicinityDatas() const
+  {
+    return m_nOutVicinityDatas;
+  }
+
+  PacketCounter&
+  getNOutVicinityDatas()
+  {
+    return m_nOutVicinityDatas;
   }
 
 protected:
@@ -229,6 +281,11 @@ protected:
     recipient.setNInHints(this->getNInHints());
     recipient.setNInVicinities(this->getNInVicinities());
     recipient.setNInVicinityDatas(this->getNInVicinityDatas());
+
+    recipient.setNOutAnnouncements(this->getNOutAnnouncements());
+    recipient.setNOutHints(this->getNOutHints());
+    recipient.setNOutVicinities(this->getNOutVicinities());
+    recipient.setNOutVicinityDatas(this->getNOutVicinityDatas());
   }
 
 protected:
@@ -241,6 +298,11 @@ protected:
   PacketCounter m_nInHints;
   PacketCounter m_nInVicinities;
   PacketCounter m_nInVicinityDatas;
+
+  PacketCounter m_nOutAnnouncements;
+  PacketCounter m_nOutHints;
+  PacketCounter m_nOutVicinities;
+  PacketCounter m_nOutVicinityDatas;
 };
 
 /** \brief contains link layer byte counters

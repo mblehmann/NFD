@@ -66,6 +66,18 @@ public:
   sendData(const Data& data);
 
   virtual void
+  sendAnnouncement(const Announcement& announcement);
+
+  virtual void
+  sendHint(const Hint& hint);
+
+  virtual void
+  sendVicinity(const Vicinity& vicinity);
+
+  virtual void
+  sendVicinityData(const VicinityData& vicinityData);
+
+  virtual void
   close();
 
   // Methods implementing AppFace interface. Do not invoke from forwarder.
