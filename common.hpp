@@ -106,10 +106,7 @@ using ndn::Exclude;
 using ndn::Block;
 using ndn::util::FaceUri;
 
-using ndn::Announcement;
-using ndn::Hint;
-using ndn::Vicinity;
-using ndn::VicinityData;
+//using ndn::Announcement;
 
 namespace tlv {
 // Don't write "namespace tlv = ndn::tlv", because NFD can add other members into this namespace.

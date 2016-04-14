@@ -39,6 +39,10 @@
 
 #include "ns3/ndnSIM/model/cs/ndn-content-store.hpp"
 
+#include <vector>
+
+using namespace std;
+
 namespace nfd {
 
 namespace fw {
@@ -87,17 +91,8 @@ public: // forwarding entrypoints and tables
   void
   onData(Face& face, const Data& data);
 
-  void
-  onAnnouncement(Face& face, const Announcement& announcement);
-
-  void
-  onHint(Face& face, const Hint& hint);
-
-  void
-  onVicinity(Face& face, const Vicinity& vicinity);
-
-  void
-  onVicinityData(Face& face, const VicinityData& vicinityData);
+//  void
+//  onAnnouncement(Face& face, const Announcement& announcement);
 
   NameTree&
   getNameTree();
@@ -197,29 +192,11 @@ PUBLIC_WITH_TESTS_ELSE_PRIVATE: // pipelines
   VIRTUAL_WITH_TESTS void
   onOutgoingData(const Data& data, Face& outFace);
 
-  VIRTUAL_WITH_TESTS void
-  onIncomingAnnouncement(Face& inFace, const Announcement& announcement);
+//  VIRTUAL_WITH_TESTS void
+//  onIncomingAnnouncement(Face& inFace, const Announcement& announcement);
 
-  VIRTUAL_WITH_TESTS void
-  onOutgoingAnnouncement(const Announcement& announcement, Face& outFace);
-
-  VIRTUAL_WITH_TESTS void
-  onIncomingHint(Face& inFace, const Hint& hint);
-
-  VIRTUAL_WITH_TESTS void
-  onOutgoingHint(const Hint& hint, Face& outFace);
-
-  VIRTUAL_WITH_TESTS void
-  onIncomingVicinity(Face& inFace, const Vicinity& vicinity);
-
-  VIRTUAL_WITH_TESTS void
-  onOutgoingVicinity(const Vicinity& vicinity, Face& outFace);
-
-  VIRTUAL_WITH_TESTS void
-  onIncomingVicinityData(Face& inFace, const VicinityData& vicinityData);
-
-  VIRTUAL_WITH_TESTS void
-  onOutgoingVicinityData(const VicinityData& vicinityData, Face& outFace);
+//  VIRTUAL_WITH_TESTS void
+//  onOutgoingAnnouncement(const Announcement& announcement, Face& outFace);
 
 PROTECTED_WITH_TESTS_ELSE_PRIVATE:
   VIRTUAL_WITH_TESTS void
@@ -266,6 +243,8 @@ private:
   DeadNonceList  m_deadNonceList;
   shared_ptr<NullFace> m_csFace;
 
+  vector<uint32_t> m_hintList;
+
   ns3::Ptr<ns3::ndn::ContentStore> m_csFromNdnSim;
 
   static const Name LOCALHOST_NAME;
@@ -310,29 +289,11 @@ Forwarder::onData(Face& face, const Data& data)
   this->onIncomingData(face, data);
 }
 
-inline void
-Forwarder::onAnnouncement(Face& face, const Announcement& announcement)
-{
-  this->onIncomingAnnouncement(face, announcement);
-}
-
-inline void
-Forwarder::onHint(Face& face, const Hint& hint)
-{
-  this->onIncomingHint(face, hint);
-}
-
-inline void
-Forwarder::onVicinity(Face& face, const Vicinity& vicinity)
-{
-  this->onIncomingVicinity(face, vicinity);
-}
-
-inline void
-Forwarder::onVicinityData(Face& face, const VicinityData& vicinityData)
-{
-  this->onIncomingVicinityData(face, vicinityData);
-}
+//inline void
+//Forwarder::onAnnouncement(Face& face, const Announcement& announcement)
+//{
+//  this->onIncomingAnnouncement(face, announcement);
+//}
 
 inline NameTree&
 Forwarder::getNameTree()

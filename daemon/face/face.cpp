@@ -44,15 +44,9 @@ Face::Face(const FaceUri& remoteUri, const FaceUri& localUri, bool isLocal, bool
   onSendInterest   .connect([this] (const ndn::Interest&) { ++m_counters.getNOutInterests(); });
   onSendData       .connect([this] (const ndn::Data&)     { ++m_counters.getNOutDatas(); });
 
-  onReceiveAnnouncement.connect([this] (const ndn::Announcement&) { ++m_counters.getNInAnnouncements(); });
-  onReceiveHint        .connect([this] (const ndn::Hint&)         { ++m_counters.getNInHints(); });
-  onReceiveVicinity    .connect([this] (const ndn::Vicinity&)     { ++m_counters.getNInVicinities(); });
-  onReceiveVicinityData.connect([this] (const ndn::VicinityData&) { ++m_counters.getNInVicinityDatas(); });
+//  onReceiveAnnouncement.connect([this] (const ndn::Announcement&) { ++m_counters.getNInAnnouncements(); });
 
-  onSendAnnouncement.connect([this] (const ndn::Announcement&) { ++m_counters.getNOutAnnouncements(); });
-  onSendHint        .connect([this] (const ndn::Hint&)         { ++m_counters.getNOutHints(); });
-  onSendVicinity    .connect([this] (const ndn::Vicinity&)     { ++m_counters.getNOutVicinities(); });
-  onSendVicinityData.connect([this] (const ndn::VicinityData&) { ++m_counters.getNOutVicinityDatas(); });
+//  onSendAnnouncement.connect([this] (const ndn::Announcement&) { ++m_counters.getNOutAnnouncements(); });
 }
 
 Face::~Face()

@@ -90,29 +90,11 @@ public:
   /// fires when a Data is sent out
   signal::Signal<Face, Data> onSendData;
 
-  /// fires when an Interest is received
-  signal::Signal<Face, Announcement> onReceiveAnnouncement;
+  /// fires when an Announcement is received
+//  signal::Signal<Face, Announcement> onReceiveAnnouncement;
 
-  /// fires when an Interest is received
-  signal::Signal<Face, Hint> onReceiveHint;
-
-  /// fires when an Interest is received
-  signal::Signal<Face, Vicinity> onReceiveVicinity;
-
-  /// fires when an Interest is received
-  signal::Signal<Face, VicinityData> onReceiveVicinityData;
-
-  /// fires when an Interest is sent out
-  signal::Signal<Face, Announcement> onSendAnnouncement;
-
-  /// fires when a Data is sent out
-  signal::Signal<Face, Hint> onSendHint;
-
-  /// fires when an Interest is sent out
-  signal::Signal<Face, Vicinity> onSendVicinity;
-
-  /// fires when a Data is sent out
-  signal::Signal<Face, VicinityData> onSendVicinityData;
+  /// fires when an Announcement is sent out
+//  signal::Signal<Face, Announcement> onSendAnnouncement;
 
   /// fires when face disconnects or fails to perform properly
   signal::Signal<Face, std::string/*reason*/> onFail;
@@ -125,17 +107,8 @@ public:
   virtual void
   sendData(const Data& data) = 0;
 
-  virtual void
-  sendAnnouncement(const Announcement& announcement) = 0;
-
-  virtual void
-  sendHint(const Hint& hint) = 0;
-
-  virtual void
-  sendVicinity(const Vicinity& vicinity) = 0;
-
-  virtual void
-  sendVicinityData(const VicinityData& vicinityData) = 0;
+//  virtual void
+//  sendAnnouncement(const Announcement& announcement) = 0;
 
   /** \brief Close the face
    *
@@ -234,15 +207,9 @@ protected:
   DECLARE_SIGNAL_EMIT(onSendInterest)
   DECLARE_SIGNAL_EMIT(onSendData)
 
-  DECLARE_SIGNAL_EMIT(onReceiveAnnouncement)
-  DECLARE_SIGNAL_EMIT(onReceiveHint)
-  DECLARE_SIGNAL_EMIT(onReceiveVicinity)
-  DECLARE_SIGNAL_EMIT(onReceiveVicinityData)
+//  DECLARE_SIGNAL_EMIT(onReceiveAnnouncement)
 
-  DECLARE_SIGNAL_EMIT(onSendAnnouncement)
-  DECLARE_SIGNAL_EMIT(onSendHint)
-  DECLARE_SIGNAL_EMIT(onSendVicinity)
-  DECLARE_SIGNAL_EMIT(onSendVicinityData)
+//  DECLARE_SIGNAL_EMIT(onSendAnnouncement)
 
 protected:
   // this method should be used only by the FaceTable

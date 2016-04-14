@@ -45,25 +45,10 @@ NullFace::sendData(const Data& data)
 {
 }
 
-void
-NullFace::sendAnnouncement(const Announcement& announcement)
-{
-}
-
-void
-NullFace::sendHint(const Hint& hint)
-{
-}
-
-void
-NullFace::sendVicinity(const Vicinity& vicinity)
-{
-}
-
-void
-NullFace::sendVicinityData(const VicinityData& vicinityData)
-{
-}
+//void
+//NullFace::sendAnnouncement(const Announcement& announcement)
+//{
+//}
 
 void
 NullFace::close()

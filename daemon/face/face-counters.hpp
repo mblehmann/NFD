@@ -161,108 +161,30 @@ public:
   }
 
   /// incoming Announcement
-  const PacketCounter&
-  getNInAnnouncements() const
-  {
-    return m_nInAnnouncements;
-  }
+//  const PacketCounter&
+//  getNInAnnouncements() const
+//  {
+//    return m_nInAnnouncements;
+//  }
 
-  PacketCounter&
-  getNInAnnouncements()
-  {
-    return m_nInAnnouncements;
-  }
-
-  /// incoming Hint
-  const PacketCounter&
-  getNInHints() const
-  {
-    return m_nInHints;
-  }
-
-  PacketCounter&
-  getNInHints()
-  {
-    return m_nInHints;
-  }
-
-  /// incoming Vicinity
-  const PacketCounter&
-  getNInVicinities() const
-  {
-    return m_nInVicinities;
-  }
-
-  PacketCounter&
-  getNInVicinities()
-  {
-    return m_nInVicinities;
-  }
-
-  /// incoming VicinityData
-  const PacketCounter&
-  getNInVicinityDatas() const
-  {
-    return m_nInVicinityDatas;
-  }
-
-  PacketCounter&
-  getNInVicinityDatas()
-  {
-    return m_nInVicinityDatas;
-  }
+//  PacketCounter&
+//  getNInAnnouncements()
+//  {
+//    return m_nInAnnouncements;
+//  }
 
   /// outgoing Announcement
-  const PacketCounter&
-  getNOutAnnouncements() const
-  {
-    return m_nOutAnnouncements;
-  }
+//  const PacketCounter&
+//  getNOutAnnouncements() const
+//  {
+//    return m_nOutAnnouncements;
+//  }
 
-  PacketCounter&
-  getNOutAnnouncements()
-  {
-    return m_nOutAnnouncements;
-  }
-
-  /// outgoing Hint
-  const PacketCounter&
-  getNOutHints() const
-  {
-    return m_nOutHints;
-  }
-
-  PacketCounter&
-  getNOutHints()
-  {
-    return m_nOutHints;
-  }
-
-  /// outgoing Vicinity
-  const PacketCounter&
-  getNOutVicinities() const
-  {
-    return m_nOutVicinities;
-  }
-
-  PacketCounter&
-  getNOutVicinities()
-  {
-    return m_nOutVicinities;
-  }
-
-  /// outgoing VicinityData
-  const PacketCounter&
-  getNOutVicinityDatas() const
-  {
-    return m_nOutVicinityDatas;
-  }
-
-  PacketCounter&
-  getNOutVicinityDatas()
-  {
-    return m_nOutVicinityDatas;
-  }
+//  PacketCounter&
+//  getNOutAnnouncements()
+//  {
+//    return m_nOutAnnouncements;
+//  }
 
 protected:
   /** \brief copy current obseverations to a struct
@@ -277,15 +199,9 @@ protected:
     recipient.setNOutInterests(this->getNOutInterests());
     recipient.setNOutDatas(this->getNOutDatas());
 
-    recipient.setNInAnnouncements(this->getNInAnnouncements());
-    recipient.setNInHints(this->getNInHints());
-    recipient.setNInVicinities(this->getNInVicinities());
-    recipient.setNInVicinityDatas(this->getNInVicinityDatas());
+//    recipient.setNInAnnouncements(this->getNInAnnouncements());
 
-    recipient.setNOutAnnouncements(this->getNOutAnnouncements());
-    recipient.setNOutHints(this->getNOutHints());
-    recipient.setNOutVicinities(this->getNOutVicinities());
-    recipient.setNOutVicinityDatas(this->getNOutVicinityDatas());
+//    recipient.setNOutAnnouncements(this->getNOutAnnouncements());
   }
 
 protected:
@@ -294,15 +210,9 @@ protected:
   PacketCounter m_nOutInterests;
   PacketCounter m_nOutDatas;
 
-  PacketCounter m_nInAnnouncements;
-  PacketCounter m_nInHints;
-  PacketCounter m_nInVicinities;
-  PacketCounter m_nInVicinityDatas;
+//  PacketCounter m_nInAnnouncements;
 
-  PacketCounter m_nOutAnnouncements;
-  PacketCounter m_nOutHints;
-  PacketCounter m_nOutVicinities;
-  PacketCounter m_nOutVicinityDatas;
+//  PacketCounter m_nOutAnnouncements;
 };
 
 /** \brief contains link layer byte counters
