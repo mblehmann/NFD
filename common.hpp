@@ -66,9 +66,6 @@
 #include <ndn-cxx/util/signal.hpp>
 
 #include <ndn-cxx/announcement.hpp>
-#include <ndn-cxx/hint.hpp>
-#include <ndn-cxx/vicinity.hpp>
-#include <ndn-cxx/vicinity-data.hpp>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/asio.hpp>
