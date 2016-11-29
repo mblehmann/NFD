@@ -181,13 +181,6 @@ LocalFace::decodeAndDispatchInput(const Block& element)
 
         this->emitSignal(onReceiveData, *d);
       }
-//    else if (payload.type() == tlv::Announcement)
-//      {
-//        shared_ptr<Announcement> a = make_shared<Announcement>();
-//        a->wireDecode(payload);
-//        
-//        this->emitSignal(onReceiveAnnouncement, *a);
-//      }
     else
       return false;
 

@@ -160,32 +160,6 @@ public:
     return m_nOutDatas;
   }
 
-  /// incoming Announcement
-//  const PacketCounter&
-//  getNInAnnouncements() const
-//  {
-//    return m_nInAnnouncements;
-//  }
-
-//  PacketCounter&
-//  getNInAnnouncements()
-//  {
-//    return m_nInAnnouncements;
-//  }
-
-  /// outgoing Announcement
-//  const PacketCounter&
-//  getNOutAnnouncements() const
-//  {
-//    return m_nOutAnnouncements;
-//  }
-
-//  PacketCounter&
-//  getNOutAnnouncements()
-//  {
-//    return m_nOutAnnouncements;
-//  }
-
 protected:
   /** \brief copy current obseverations to a struct
    *  \param recipient an object with set methods for counters
@@ -198,10 +172,6 @@ protected:
     recipient.setNInDatas(this->getNInDatas());
     recipient.setNOutInterests(this->getNOutInterests());
     recipient.setNOutDatas(this->getNOutDatas());
-
-//    recipient.setNInAnnouncements(this->getNInAnnouncements());
-
-//    recipient.setNOutAnnouncements(this->getNOutAnnouncements());
   }
 
 protected:

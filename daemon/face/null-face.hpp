@@ -45,9 +45,6 @@ public:
   void
   sendData(const Data& data) DECL_OVERRIDE;
 
-//  void
-//  sendAnnouncement(const Announcement& announcement) DECL_OVERRIDE;
-
   void
   close() DECL_OVERRIDE;
 };

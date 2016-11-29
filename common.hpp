@@ -65,8 +65,6 @@
 #include <ndn-cxx/util/face-uri.hpp>
 #include <ndn-cxx/util/signal.hpp>
 
-#include <ndn-cxx/announcement.hpp>
-
 #include <boost/algorithm/string.hpp>
 #include <boost/asio.hpp>
 #include <boost/assert.hpp>
@@ -102,8 +100,6 @@ using ndn::Name;
 using ndn::Exclude;
 using ndn::Block;
 using ndn::util::FaceUri;
-
-//using ndn::Announcement;
 
 namespace tlv {
 // Don't write "namespace tlv = ndn::tlv", because NFD can add other members into this namespace.

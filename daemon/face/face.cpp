@@ -43,10 +43,6 @@ Face::Face(const FaceUri& remoteUri, const FaceUri& localUri, bool isLocal, bool
   onReceiveData    .connect([this] (const ndn::Data&)     { ++m_counters.getNInDatas(); });
   onSendInterest   .connect([this] (const ndn::Interest&) { ++m_counters.getNOutInterests(); });
   onSendData       .connect([this] (const ndn::Data&)     { ++m_counters.getNOutDatas(); });
-
-//  onReceiveAnnouncement.connect([this] (const ndn::Announcement&) { ++m_counters.getNInAnnouncements(); });
-
-//  onSendAnnouncement.connect([this] (const ndn::Announcement&) { ++m_counters.getNOutAnnouncements(); });
 }
 
 Face::~Face()

@@ -87,7 +87,6 @@ FaceTable::addImpl(shared_ptr<Face> face, FaceId faceId)
 
   face->onReceiveInterest.connect(bind(&Forwarder::onInterest, &m_forwarder, ref(*face), _1));
   face->onReceiveData.connect(bind(&Forwarder::onData, &m_forwarder, ref(*face), _1));
-//  face->onReceiveAnnouncement.connect(bind(&Forwarder::onAnnouncement, &m_forwarder, ref(*face), _1));
   face->onFail.connectSingleShot(bind(&FaceTable::remove, this, face, _1));
 
   this->onAdd(face);

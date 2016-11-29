@@ -90,12 +90,6 @@ public:
   /// fires when a Data is sent out
   signal::Signal<Face, Data> onSendData;
 
-  /// fires when an Announcement is received
-//  signal::Signal<Face, Announcement> onReceiveAnnouncement;
-
-  /// fires when an Announcement is sent out
-//  signal::Signal<Face, Announcement> onSendAnnouncement;
-
   /// fires when face disconnects or fails to perform properly
   signal::Signal<Face, std::string/*reason*/> onFail;
 
@@ -106,9 +100,6 @@ public:
   /// send a Data
   virtual void
   sendData(const Data& data) = 0;
-
-//  virtual void
-//  sendAnnouncement(const Announcement& announcement) = 0;
 
   /** \brief Close the face
    *
@@ -206,10 +197,6 @@ protected:
   DECLARE_SIGNAL_EMIT(onReceiveData)
   DECLARE_SIGNAL_EMIT(onSendInterest)
   DECLARE_SIGNAL_EMIT(onSendData)
-
-//  DECLARE_SIGNAL_EMIT(onReceiveAnnouncement)
-
-//  DECLARE_SIGNAL_EMIT(onSendAnnouncement)
 
 protected:
   // this method should be used only by the FaceTable

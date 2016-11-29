@@ -125,12 +125,6 @@ InternalFace::sendData(const Data& data)
   this->emitSignal(onSendData, data);
 }
 
-//void
-//InternalFace::sendAnnouncement(const Announcement& announcement)
-//{
-//  this->emitSignal(onSendAnnouncement, announcement);
-//}
-
 void
 InternalFace::close()
 {

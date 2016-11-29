@@ -192,12 +192,6 @@ PUBLIC_WITH_TESTS_ELSE_PRIVATE: // pipelines
   VIRTUAL_WITH_TESTS void
   onOutgoingData(const Data& data, Face& outFace);
 
-//  VIRTUAL_WITH_TESTS void
-//  onIncomingAnnouncement(Face& inFace, const Announcement& announcement);
-
-//  VIRTUAL_WITH_TESTS void
-//  onOutgoingAnnouncement(const Announcement& announcement, Face& outFace);
-
 PROTECTED_WITH_TESTS_ELSE_PRIVATE:
   VIRTUAL_WITH_TESTS void
   setUnsatisfyTimer(shared_ptr<pit::Entry> pitEntry);
@@ -288,12 +282,6 @@ Forwarder::onData(Face& face, const Data& data)
 {
   this->onIncomingData(face, data);
 }
-
-//inline void
-//Forwarder::onAnnouncement(Face& face, const Announcement& announcement)
-//{
-//  this->onIncomingAnnouncement(face, announcement);
-//}
 
 inline NameTree&
 Forwarder::getNameTree()

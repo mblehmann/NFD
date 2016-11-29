@@ -45,11 +45,6 @@ NullFace::sendData(const Data& data)
 {
 }
 
-//void
-//NullFace::sendAnnouncement(const Announcement& announcement)
-//{
-//}
-
 void
 NullFace::close()
 {

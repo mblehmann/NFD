@@ -78,6 +78,7 @@ Forwarder::onIncomingInterest(Face& inFace, const Interest& interest)
     return;
   }
 
+  /* PDRM Change */
   int hopCount = 0;
   auto ns3PacketTag = interest.getTag<ns3::ndn::Ns3PacketTag>();
   if (ns3PacketTag != nullptr) {
@@ -91,6 +92,7 @@ Forwarder::onIncomingInterest(Face& inFace, const Interest& interest)
   {
     return;
   }
+  /* PDRM Change */
 
   // PIT insert
   shared_ptr<pit::Entry> pitEntry = m_pit.insert(interest).first;
@@ -334,6 +336,7 @@ Forwarder::onIncomingData(Face& inFace, const Data& data)
   dataCopyWithoutPacket->removeTag<ns3::ndn::Ns3PacketTag>();
 
   // CS insert
+  /* PDRM Change */
   if (!Name("/vicinity").isPrefixOf(data.getName()))
   {
     if (m_csFromNdnSim == nullptr)
@@ -341,6 +344,7 @@ Forwarder::onIncomingData(Face& inFace, const Data& data)
     else
       m_csFromNdnSim->Add(dataCopyWithoutPacket);
   }
+  /* PDRM Change */
 
   std::set<shared_ptr<Face> > pendingDownstreams;
   // foreach PitEntry
@@ -368,11 +372,13 @@ Forwarder::onIncomingData(Face& inFace, const Data& data)
     this->insertDeadNonceList(*pitEntry, true, data.getFreshnessPeriod(), &inFace);
 
     // mark PIT satisfied
+    /* PDRM Change */
     if (!Name("/vicinity").isPrefixOf(data.getName()))
     {
       pitEntry->deleteInRecords();
       pitEntry->deleteOutRecord(inFace);
     }
+    /* PDRM Change */
 
     // set PIT straggler timer
     this->setStragglerTimer(pitEntry, true, data.getFreshnessPeriod());
@@ -395,7 +401,35 @@ Forwarder::onDataUnsolicited(Face& inFace, const Data& data)
 {
   // accept to cache?
   bool acceptToCache = inFace.isLocal();
-  if (acceptToCache) {
+
+  /* Unsolicited Data Change */
+  bool unsolicitedData = data.getUnsolicited();
+
+  NFD_LOG_DEBUG(unsolicitedData << " " << acceptToCache);
+
+  if (unsolicitedData)
+  {
+    if (acceptToCache) {
+      shared_ptr<fib::Entry> fibEntry = m_fib.findLongestPrefixMatch("/");
+      const fib::NextHopList& nexthops = fibEntry->getNextHops();
+
+      for (fib::NextHopList::const_iterator it = nexthops.begin(); it != nexthops.end(); ++it) {
+        shared_ptr<Face> outFace = it->getFace();
+        this->onOutgoingData(data, *outFace);
+      }
+    } else {
+      // CS insert
+      if (m_csFromNdnSim == nullptr)
+        m_cs.insert(data, true);
+      else
+        m_csFromNdnSim->Add(data.shared_from_this());
+
+      NFD_LOG_DEBUG("onDataUnsolicited face=" << inFace.getId() <<
+                    " data=" << data.getName());
+    }
+  }
+  else if (acceptToCache) {
+  /* Unsolicited Data Change */
     // CS insert
     if (m_csFromNdnSim == nullptr)
       m_cs.insert(data, true);
@@ -433,71 +467,6 @@ Forwarder::onOutgoingData(const Data& data, Face& outFace)
   outFace.sendData(data);
   ++m_counters.getNOutDatas();
 }
-
-//void
-//Forwarder::onIncomingAnnouncement(Face& inFace, const Announcement& announcement)
-//{
-//  NFD_LOG_DEBUG("onIncomingAnnouncement face=" << inFace.getId() <<
-//                " announcement=" << announcement.getName());
-//
-//  const_cast<Announcement&>(announcement).setIncomingFaceId(inFace.getId());
-//  ++m_counters.getNInAnnouncements();
-//
-//  // /localhost scope control
-//  bool isViolatingLocalhost = !inFace.isLocal() &&
-//                              LOCALHOST_NAME.isPrefixOf(announcement.getName());
-//  if (isViolatingLocalhost) {
-//    NFD_LOG_DEBUG("onIncomingAnnouncement face=" << inFace.getId() <<
-//                  " announcement=" << announcement.getName() << " violates /localhost");
-//    // (drop)
-//    return;
-//  }
-//
-///*
-//  // detect duplicate Nonce
-//  int dnw = pitEntry->findNonce(interest.getNonce(), inFace);
-//  bool hasDuplicateNonce = (dnw != pit::DUPLICATE_NONCE_NONE) ||
-//                           m_deadNonceList.has(interest.getName(), interest.getNonce());
-//  if (hasDuplicateNonce) {
-//    // goto Interest loop pipeline
-//    this->onInterestLoop(inFace, interest, pitEntry);
-//    return;
-//  }
-//*/
-//
-//  for (const auto& i : this->getFaceTable()) {
-//    shared_ptr<Face> outFace = std::dynamic_pointer_cast<Face>(i);
-//    if (outFace.get() == &inFace) {
-//      continue;
-//    }
-//    this->onOutgoingAnnouncement(announcement, *outFace);
-//  }
-//
-//}
-
-//void
-//Forwarder::onOutgoingAnnouncement(const Announcement& announcement, Face& outFace)
-//{
-//  if (outFace.getId() == INVALID_FACEID) {
-//    NFD_LOG_WARN("onOutgoingAnnouncement face=invalid announcement=" << announcement.getName());
-//    return;
-//  }
-//  NFD_LOG_DEBUG("onOutgoingAnnouncement face=" << outFace.getId() << " announcement=" << announcement.getName());
-//
-//  // /localhost scope control
-//  bool isViolatingLocalhost = !outFace.isLocal() &&
-//                              LOCALHOST_NAME.isPrefixOf(announcement.getName());
-//  if (isViolatingLocalhost) {
-//    NFD_LOG_DEBUG("onOutgoingAnnouncement face=" << outFace.getId() <<
-//                 " announcement=" << announcement.getName() << " violates /localhost");
-//    // (drop)
-//    return;
-//  }
-//
-//  // send Announcement
-//  outFace.sendAnnouncement(announcement);
-//  ++m_counters.getNOutAnnouncements();
-//}
 
 static inline bool
 compare_InRecord_expiry(const pit::InRecord& a, const pit::InRecord& b)
